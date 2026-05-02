@@ -5,7 +5,8 @@
 -- Author: Christinah Mmabotse Mosima
 -- ============================================================
 
-USE bank;
+CREATE DATABASE IF NOT EXISTS grocerydb;
+USE grocerydb;
 
 -- ============================================================
 -- DROP ORDER (respect foreign key dependencies)
@@ -411,3 +412,12 @@ JOIN products  p   ON oi.product_id = p.product_id
 JOIN categories cat ON p.category_id = cat.category_id
 GROUP BY cat.category_name
 ORDER BY total_revenue DESC;
+
+
+-- ETL bridge view for consistent field naming with MongoDB
+CREATE OR REPLACE VIEW order_activity_bridge AS
+SELECT o.order_id, c.customer_name, p.product_name AS product, oi.quantity, o.order_date
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id;

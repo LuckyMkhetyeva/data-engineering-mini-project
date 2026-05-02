@@ -8,18 +8,22 @@ services:
     container_name: mysql-node-71
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: bank
+      MYSQL_DATABASE: grocerydb
     ports:
       - "3309:3306"
+    volumes:
+      - ./sql-scripts/mysql_schema.sql:/docker-entrypoint-initdb.d/01_mysql_schema.sql
 
   mysql-node-8:
     image: mysql:8
     container_name: mysql-node-81
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: bank
+      MYSQL_DATABASE: grocerydb
     ports:
       - "3310:3306"
+    volumes:
+      - ./sql-scripts/mysql_schema.sql:/docker-entrypoint-initdb.d/01_mysql_schema.sql
 
   # ----------------------------
   # MONGODB (NoSQL layer)
@@ -27,8 +31,12 @@ services:
   mongodb:
     image: mongo:6
     container_name: mongodb
+    restart: unless-stopped
     ports:
       - "27017:27017"
+    volumes:
+      - ./mongo-scripts/init_mongo.js:/docker-entrypoint-initdb.d/init_mongo.js:ro
+      - ./mongo-scripts/mongo_seed.json:/docker-entrypoint-initdb.d/mongo_seed.json:ro
 
   # ----------------------------
   # POSTGRES (Data Warehouse)

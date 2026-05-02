@@ -1,53 +1,39 @@
-# Data Engineering Mini Project – BI Pipeline
+# Data Engineering Mini Project – Grocery & Supermarket BI Pipeline
 
 ## Overview
+This project implements an end-to-end BI pipeline for a grocery/supermarket retail domain:
 
-This project implements an end-to-end **Business Intelligence (BI) pipeline** within a retail analytics context. The system simulates a real-world data engineering workflow where operational systems generate data that is transformed into structured analytical insights through a governed **ETL (Extract, Transform, Load)** process and stored in a centralized data warehouse.
+**MySQL + MongoDB → ETL Scripts → Raw Data → Transform → Cleaned Data → PostgreSQL Data Warehouse → Metabase Dashboards**
 
-The pipeline follows a layered architecture:
+## Current Scope (Phase 1)
+This repository currently covers **OLTP source setup and repository structure cleanup**.
+ETL implementation is intentionally deferred to the next phase.
 
-- **OLTP Systems**: MySQL (transactional data) and MongoDB (behavioral data)
-- **ETL Process**: Data extraction, cleaning, transformation, and loading
-- **OLAP System**: PostgreSQL data warehouse
-- **BI Layer**: Metabase dashboards and visualizations
-
----
-
-## System Architecture
-
- This section will be updated with Mermaid and PlantUML diagrams.
-
-The system flow is as follows:
-
-```bash
-MySQL + MongoDB → ETL → PostgreSQL → Metabase
-```
-
-- MySQL stores structured transactional data (orders)
-- MongoDB stores semi-structured behavioral data (customer activity)
-- ETL integrates and standardizes the data
-- PostgreSQL stores analytical datasets
-- Metabase provides dashboards and insights
-
-Project Structure
-
+## Repository Structure
 ```bash
 data-engineering-mini-project/
-├── docker-compose.yml
-├── README.md
-├── sql/
-│   ├── ...
-├── mongo/
-│   ├──...
-│   ├──...
+├── .github/
 ├── data/
 │   ├── raw/
+│   │   └── .gitkeep
 │   └── cleaned/
+│       └── .gitkeep
+├── diagrams/
 ├── docs/
-│   ├── screenshots/
-│   ├── ...
-└── diagrams/
-    ├── ...
+├── etl-scripts/
+├── mongo-scripts/
+│   ├── mongo_seed.json
+│   └── mongo_queries.js
+├── sql-scripts/
+│   ├── mysql_schema.sql
+│   ├── postgres_dw_schema.sql
+│   ├── load_dw.sql
+│   └── analytics_queries.sql
+├── README.md
+└── docker-compose.yaml
 ```
 
-## Project Domain - 
+## Notes
+- `data/raw` and `data/cleaned` are tracked with `.gitkeep` only until ETL outputs are generated.
+- MongoDB seed data is stored as JSON (`mongo_seed.json`) for straightforward `mongoimport` usage.
+- SQL scripts are separated by platform purpose (MySQL OLTP, PostgreSQL DW, load template, analytics queries).

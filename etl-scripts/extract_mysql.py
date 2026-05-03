@@ -1,9 +1,9 @@
-"""Extract raw flattened order data from MySQL and save it to CSV.
-
-This script implements the Extract phase of an ETL pipeline for the grocery
-retail system. It connects to MySQL, runs a join query across transactional
-entities, and writes the raw extract to data/raw/mysql_orders_raw.csv.
-"""
+# =================================================================
+# DMS580S Mini Project 2026
+# ETL Layer: Extracting MySQL raw data. Prepping for transformation
+# Domain: Grocery & Supermarket Retail (FreshMart)
+# Author: Ongeziwe J. Mtolo - 221205276
+# =================================================================
 
 from __future__ import annotations
 

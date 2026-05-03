@@ -1,3 +1,10 @@
+# ============================================================
+# DMS580S Mini Project 2026
+# ETL Layer: Loading data to the data warehouse
+# Domain: Grocery & Supermarket Retail (FreshMart)
+# Author: Ongeziwe J. Mtolo - 221205276
+# ============================================================
+
 from __future__ import annotations
 
 import os

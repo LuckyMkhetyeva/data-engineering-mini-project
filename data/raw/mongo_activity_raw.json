@@ -1,0 +1,252 @@
+[
+  {
+    "_id": "69f6692722be5c1e6b8de666",
+    "customer_name": "Amahle Dlamini",
+    "product": "Chicken Breast",
+    "category": "Meat",
+    "activity": "Viewed",
+    "timestamp": "2025-01-04T09:15:00Z",
+    "session_id": "sess-001",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de667",
+    "customer_name": "Amahle Dlamini",
+    "product": "Chicken Breast",
+    "category": "Meat",
+    "activity": "Added to Cart",
+    "timestamp": "2025-01-04T09:18:32Z",
+    "session_id": "sess-001",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de668",
+    "customer_name": "Amahle Dlamini",
+    "product": "Chicken Breast",
+    "category": "Meat",
+    "activity": "Purchased",
+    "timestamp": "2025-01-05T10:45:00Z",
+    "session_id": "sess-001",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de669",
+    "customer_name": "Sipho Nkosi",
+    "product": "Full Cream Milk",
+    "category": "Dairy",
+    "activity": "Viewed",
+    "timestamp": "2025-01-06T14:20:00Z",
+    "session_id": "sess-002",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66a",
+    "customer_name": "Sipho Nkosi",
+    "product": "Full Cream Milk",
+    "category": "Dairy",
+    "activity": "Purchased",
+    "timestamp": "2025-01-07T08:05:00Z",
+    "session_id": "sess-002",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66b",
+    "customer_name": "Lerato Mokoena",
+    "product": "Maize Meal (5kg)",
+    "category": "Grains",
+    "activity": "Viewed",
+    "timestamp": "2025-01-09T11:30:00Z",
+    "session_id": "sess-003",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66c",
+    "customer_name": "Lerato Mokoena",
+    "product": "Maize Meal (5kg)",
+    "category": "Grains",
+    "activity": "Added to Cart",
+    "timestamp": "2025-01-09T11:34:00Z",
+    "session_id": "sess-003",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66d",
+    "customer_name": "Lerato Mokoena",
+    "product": "Maize Meal (5kg)",
+    "category": "Grains",
+    "activity": "Purchased",
+    "timestamp": "2025-01-10T09:00:00Z",
+    "session_id": "sess-003",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66e",
+    "customer_name": "Thabo Sithole",
+    "product": "Basmati Rice",
+    "category": "Grains",
+    "activity": "Viewed",
+    "timestamp": "2025-02-01T16:45:00Z",
+    "session_id": "sess-004",
+    "device_type": "tablet"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de66f",
+    "customer_name": "Thabo Sithole",
+    "product": "Basmati Rice",
+    "category": "Grains",
+    "activity": "Added to Cart",
+    "timestamp": "2025-02-01T16:50:00Z",
+    "session_id": "sess-004",
+    "device_type": "tablet"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de670",
+    "customer_name": "Kagiso Molefe",
+    "product": "Beef Mince",
+    "category": "Meat",
+    "activity": "Viewed",
+    "timestamp": "2025-02-01T10:05:00Z",
+    "session_id": "sess-005",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de671",
+    "customer_name": "Kagiso Molefe",
+    "product": "Beef Mince",
+    "category": "Meat",
+    "activity": "Purchased",
+    "timestamp": "2025-02-02T12:30:00Z",
+    "session_id": "sess-005",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de672",
+    "customer_name": "Zanele Khumalo",
+    "product": "Cheddar Cheese",
+    "category": "Dairy",
+    "activity": "Viewed",
+    "timestamp": "2025-02-05T09:00:00Z",
+    "session_id": "sess-006",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de673",
+    "customer_name": "Zanele Khumalo",
+    "product": "Cheddar Cheese",
+    "category": "Dairy",
+    "activity": "Added to Cart",
+    "timestamp": "2025-02-05T09:03:00Z",
+    "session_id": "sess-006",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de674",
+    "customer_name": "Zanele Khumalo",
+    "product": "Cheddar Cheese",
+    "category": "Dairy",
+    "activity": "Purchased",
+    "timestamp": "2025-02-06T11:15:00Z",
+    "session_id": "sess-006",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de675",
+    "customer_name": "Hendrik van Wyk",
+    "product": "Apples (Granny Smith)",
+    "category": "Produce",
+    "activity": "Viewed",
+    "timestamp": "2025-02-17T13:20:00Z",
+    "session_id": "sess-007",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de676",
+    "customer_name": "Hendrik van Wyk",
+    "product": "Apples (Granny Smith)",
+    "category": "Produce",
+    "activity": "Purchased",
+    "timestamp": "2025-02-18T08:40:00Z",
+    "session_id": "sess-007",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de677",
+    "customer_name": "Fatima Cassim",
+    "product": "Instant Coffee",
+    "category": "Beverages",
+    "activity": "Viewed",
+    "timestamp": "2025-03-03T07:55:00Z",
+    "session_id": "sess-008",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de678",
+    "customer_name": "Fatima Cassim",
+    "product": "Instant Coffee",
+    "category": "Beverages",
+    "activity": "Added to Cart",
+    "timestamp": "2025-03-03T07:58:00Z",
+    "session_id": "sess-008",
+    "device_type": "mobile"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de679",
+    "customer_name": "David Osei",
+    "product": "Chicken Breast",
+    "category": "Meat",
+    "activity": "Viewed",
+    "timestamp": "2025-03-04T15:10:00Z",
+    "session_id": "sess-009",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de67a",
+    "customer_name": "David Osei",
+    "product": "Chicken Breast",
+    "category": "Meat",
+    "activity": "Purchased",
+    "timestamp": "2025-03-05T10:00:00Z",
+    "session_id": "sess-009",
+    "device_type": "desktop"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de67b",
+    "customer_name": "Nomsa Zulu",
+    "product": "Free-Range Eggs",
+    "category": "Dairy",
+    "activity": "Viewed",
+    "timestamp": "2025-04-19T12:00:00Z",
+    "session_id": "sess-010",
+    "device_type": "tablet"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de67c",
+    "customer_name": "Nomsa Zulu",
+    "product": "Free-Range Eggs",
+    "category": "Dairy",
+    "activity": "Added to Cart",
+    "timestamp": "2025-04-19T12:04:00Z",
+    "session_id": "sess-010",
+    "device_type": "tablet"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de67d",
+    "customer_name": "Nomsa Zulu",
+    "product": "Free-Range Eggs",
+    "category": "Dairy",
+    "activity": "Purchased",
+    "timestamp": "2025-04-20T09:30:00Z",
+    "session_id": "sess-010",
+    "device_type": "tablet"
+  },
+  {
+    "_id": "69f6692722be5c1e6b8de67e",
+    "customer_name": "Precious Mahlangu",
+    "product": "Washing Powder",
+    "category": "Household",
+    "activity": "Viewed",
+    "timestamp": "2025-05-11T17:45:00Z",
+    "session_id": "sess-011",
+    "device_type": "mobile"
+  }
+]

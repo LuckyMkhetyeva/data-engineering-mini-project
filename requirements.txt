@@ -1,3 +1,5 @@
 mysql-connector-python
 pandas
 pymongo
+sqlalchemy
+psycopg2-binary

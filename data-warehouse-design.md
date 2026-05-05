@@ -43,34 +43,35 @@ The Grocery data warehouse follows a **Star Schema** design pattern. The central
 
 ---
 
-## 4. Step 1: Verify Source Data (MySQL OLTP)
+#### Step 1: Verify Source Data (MySQL OLTP)
 ```
 docker exec mysql-node-71 mysql -uroot -prootpass -e "USE grocerydb; SELECT COUNT() AS total_orders FROM orders; SELECT COUNT() AS total_items FROM order_items;"
 ```
-
+**Output:**
 ![MySQL Source Data](./docs/screenshots/mysql_source_data.png)
 
 ---
 
-## 5. Step 2: Verify Source Data (MongoDB OLTP)
+#### Step 2: Verify Source Data (MongoDB OLTP)
 
 ```
 docker exec mongodb mongosh --eval "db = db.getSiblingDB('grocerydb'); print('Activity records: ' + db.customer_activity.countDocuments());"
 ```
-
+**Output:**
 ![MongoDB Source Data](./docs/screenshots/mongodb_source_data.png)
 
 
-## 6. Step 3: Opening PostgreSQL Warehouse
+#### Step 3: Opening PostgreSQL Warehouse
 
 ```
 docker exec -it postgres-dw psql -U admin -d warehouse
 ```
+**Output:**
 ![Postgres_Connection](./docs/screenshots/postgres_connection.png)
 
 ---
 
-## 7. Step 2: Creating All Warehouse Tables
+#### Step 4: Creating All Warehouse Tables
 
 ```sql
 -- Create dedicated schema for the grocery data warehouse
@@ -164,3 +165,12 @@ CREATE TABLE IF NOT EXISTS grocery.fact_sales (
     order_status TEXT
 );
 ```
+**Output:**
+![Tables_Created](./docs/screenshots/tables_created.png)
+
+```
+\dt grocery.*
+```
+**Output:**
+![all_tables](./docs/screenshots/all_tables.png)
+

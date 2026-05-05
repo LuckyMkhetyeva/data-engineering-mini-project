@@ -48,7 +48,7 @@ The Grocery data warehouse follows a **Star Schema** design pattern. The central
 docker exec mysql-node-71 mysql -uroot -prootpass -e "USE grocerydb; SELECT COUNT() AS total_orders FROM orders; SELECT COUNT() AS total_items FROM order_items;"
 ```
 
-![MySQL Source Data](./screenshots/mysql_source_data.png)
+![MySQL Source Data](./docs/screenshots/mysql_source_data.png)
 
 ---
 
@@ -58,7 +58,7 @@ docker exec mysql-node-71 mysql -uroot -prootpass -e "USE grocerydb; SELECT COUN
 docker exec mongodb mongosh --eval "db = db.getSiblingDB('grocerydb'); print('Activity records: ' + db.customer_activity.countDocuments());"
 ```
 
-![MongoDB Source Data](./screenshots/mongodb_source_data.png)
+![MongoDB Source Data](./docs/screenshots/mongodb_source_data.png)
 
 
 ## 6. Step 3: Opening PostgreSQL Warehouse

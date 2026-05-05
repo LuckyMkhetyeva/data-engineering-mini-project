@@ -1,6 +1,7 @@
 # Grocery - Data Warehouse Design (OLAP System)
 
-**Responsible:** Keitumetse Dimpe
+**Responsible:** Keitumetse Dimpe  
+**Student number:** 221806229
 
 ---
 

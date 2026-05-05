@@ -1,4 +1,4 @@
-# FreshMart Grocery - Data Warehouse Design (OLAP System)
+# Grocery - Data Warehouse Design (OLAP System)
 
 **Responsible:** Keitumetse Dimpe
 

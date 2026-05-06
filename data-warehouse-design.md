@@ -39,10 +39,6 @@ The Grocery data warehouse follows a **Star Schema** design pattern. The central
 | `dim_activity` | DIMENSION | 3 | Activity types (Viewed, Added to Cart, Purchased) |
 
 ### 3.2 Star Schema Diagram
-
-> Insert full-colour star schema diagram screenshot here
-> (Open `star_schema_diagram.html` in browser → screenshot → paste below)
-
 ![Star Schema Diagram](./diagrams/Star%20Schema%20Diagram.png)
 
 ### 3.3 Text Representation

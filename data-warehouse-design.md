@@ -73,451 +73,147 @@ The Grocery data warehouse follows a **Star Schema** design pattern. The central
 ```
 ---
 
-## 4. Step 1 — Verify MySQL Source Data
+## 4. Source Data Verification
 
-```bash
-docker exec mysql-node-71 mysql -uroot -prootpass -e \
-  "USE grocerydb; \
-   SELECT COUNT(*) AS total_orders FROM orders; \
-   SELECT COUNT(*) AS total_items FROM order_items;"
-```
+Before building the data warehouse, the source OLTP systems were verified to ensure data availability.
 
-**Expected output:**
-```
-total_orders
-35
-total_items
-70
-```
+### 4.1 MySQL OLTP Data (Orders)
 
-**Screenshot — MySQL source data verified**
+![MySQL Source Data](./docs/screenshots/mysql_source_data.png)  
 
-![MySQL Source Data](./docs/screenshots/mysql_source_data.png)
+**What the screenshot demonstrates:**
+- `total_orders = 35` — confirms 35 orders exist in the source system
+- `total_items = 70` — confirms 70 order line items, exceeding the 30‑record minimum requirement
+- The `orders` and `order_items` tables contain the raw transactional data that will populate `orders_dw`  
 
----
-
-## 5. Step 2 — Verify MongoDB Source Data
-
-```bash
-docker exec mongodb mongosh --eval \
-  "db = db.getSiblingDB('grocerydb'); \
-   print('Activity records: ' + db.customer_activity.countDocuments());"
-```
-
-**Expected output:**
-```
-Activity records: 25
-```
-
-**Screenshot — MongoDB source data verified**
+### 4.2 MongoDB OLTP Data  
 
 ![MongoDB Source Data](./docs/screenshots//mongodb_source_data.png)
 
----
-
-## 6. Step 3 — Open PostgreSQL Warehouse
-
-```bash
-docker exec -it postgres-dw psql -U admin -d warehouse
-```
-
-You will see `warehouse=#` — this confirms you are connected.
-
-**Screenshot — PostgreSQL connection confirmed**
-
-![PostgreSQL Connection](./docs/screenshots/postgres_connection.png)
+**What the screenshot demonstrates:**
+- `Activity records: 25` — confirms 25 customer behavioral events.
+- Documented activity types include: `Viewed`, `Added to Cart`, `Purchased`
+- This collection provides the behavioral data that will populate `customer_activity`
 
 ---
 
-## 7. Step 4 — Create Schema and All Tables
+## 5. PostgreSQL Data Warehouse Setup
 
-Paste this entire block inside `warehouse=#`:
+### 5.1 Database Connection  
 
-```sql
--- Create dedicated schema for the grocery data warehouse
-CREATE SCHEMA IF NOT EXISTS grocery;
+![PostgreSQL Connection](./docs/screenshots/postgres_connection.png)  
 
--- REQUIRED TABLE 1: orders_dw (staging from MySQL)
-CREATE TABLE IF NOT EXISTS grocery.orders_dw (
-    order_id       INT,
-    order_date     DATE,
-    customer_name  TEXT,
-    product        TEXT,
-    category       TEXT,
-    quantity       INT,
-    unit_price     NUMERIC(10,2),
-    line_total     NUMERIC(12,2),
-    payment_method TEXT,
-    order_status   TEXT
-);
+**What the screenshot demonstrates:**
+- Successful connection to the `postgres-dw` container via `docker exec`
+- The `warehouse=#` prompt confirms an active PostgreSQL session authenticated as user `admin`
+- The `warehouse` database is ready to receive DDL and DML commands  
 
--- REQUIRED TABLE 2: customer_activity (staging from MongoDB)
-CREATE TABLE IF NOT EXISTS grocery.customer_activity (
-    customer_name      TEXT,
-    product            TEXT,
-    category           TEXT,
-    activity           TEXT,
-    activity_timestamp TIMESTAMP,
-    device_type        TEXT,
-    session_id         TEXT
-);
+### 5.2 Schema and Table Creation  
 
--- REQUIRED TABLE 3: customer_analytics (final integrated table)
-CREATE TABLE IF NOT EXISTS grocery.customer_analytics (
-    customer_name      TEXT,
-    product            TEXT,
-    category           TEXT,
-    activity           TEXT,
-    line_total         NUMERIC(12,2),
-    order_date         DATE,
-    activity_timestamp TIMESTAMP,
-    payment_method     TEXT,
-    order_status       TEXT,
-    device_type        TEXT
-);
+![All Tables](./docs/screenshots/all_tables.png)  
 
--- DIMENSION 1: Customers
-CREATE TABLE IF NOT EXISTS grocery.dim_customer (
-    customer_id   SERIAL PRIMARY KEY,
-    customer_name TEXT NOT NULL UNIQUE
-);
+**What the screenshot demonstrates:**
+- `CREATE SCHEMA` — the `grocery` namespace was successfully created
+- Nine `CREATE TABLE` statements executed without errors
+- All three required tables created: `orders_dw`, `customer_activity`, `customer_analytics`
+- All five dimension tables created: `dim_customer`, `dim_product`, `dim_date`, `dim_payment`, `dim_activity`
+- The fact table `fact_sales` created with foreign key references to all four applicable dimensions
+- Complete DDL is available in [`01_create_schema_and_tables.sql`](./sql-scripts/data-warehouse-scripts/01_create_schema_and_tables.sql)
 
--- DIMENSION 2: Products
-CREATE TABLE IF NOT EXISTS grocery.dim_product (
-    product_id   SERIAL PRIMARY KEY,
-    product_name TEXT NOT NULL,
-    category     TEXT NOT NULL
-);
-
--- DIMENSION 3: Dates
-CREATE TABLE IF NOT EXISTS grocery.dim_date (
-    date_id    SERIAL PRIMARY KEY,
-    full_date  DATE NOT NULL UNIQUE,
-    day        INT,
-    month      INT,
-    month_name TEXT,
-    quarter    INT,
-    year       INT
-);
-
--- DIMENSION 4: Payment Methods
-CREATE TABLE IF NOT EXISTS grocery.dim_payment (
-    payment_id     SERIAL PRIMARY KEY,
-    payment_method TEXT NOT NULL UNIQUE
-);
-
--- DIMENSION 5: Activity Types
-CREATE TABLE IF NOT EXISTS grocery.dim_activity (
-    activity_id   SERIAL PRIMARY KEY,
-    activity_type TEXT NOT NULL UNIQUE
-);
-
--- FACT TABLE: fact_sales (central table — FK references to all 4 dimensions)
-CREATE TABLE IF NOT EXISTS grocery.fact_sales (
-    sale_id      SERIAL PRIMARY KEY,
-    customer_id  INT REFERENCES grocery.dim_customer(customer_id),
-    product_id   INT REFERENCES grocery.dim_product(product_id),
-    date_id      INT REFERENCES grocery.dim_date(date_id),
-    payment_id   INT REFERENCES grocery.dim_payment(payment_id),
-    quantity     INT,
-    unit_price   NUMERIC(10,2),
-    line_total   NUMERIC(12,2),
-    order_status TEXT
-);
-```
-
-**Screenshot — All tables created successfully**
-
-![Tables Created](./docs/screenshots/tables_created.png)
-
----
-
-## 8. Step 5 — Verify All Tables Created
-
-```sql
-\dt grocery.*
-```
-
-**Expected output — 9 tables listed:**
-```
- Schema  |        Name        | Type  | Owner
----------+--------------------+-------+-------
- grocery | customer_activity  | table | admin
- grocery | customer_analytics | table | admin
- grocery | dim_activity       | table | admin
- grocery | dim_customer       | table | admin
- grocery | dim_date           | table | admin
- grocery | dim_payment        | table | admin
- grocery | dim_product        | table | admin
- grocery | fact_sales         | table | admin
- grocery | orders_dw          | table | admin
-(9 rows)
-```
-
- **Screenshot — 9 tables listed under grocery schema**
-
-![All Tables](./docs/screenshots/all_tables.png)
-
----
-
-## 9. Step 6 — Check Table Structures
-
-### orders_dw
-
-```sql
-\d grocery.orders_dw
-```
-
- **Screenshot — orders_dw column definitions**
+### 5.3 orders_dw Structure
 
 ![orders_dw Structure](./docs/screenshots/orders_dw_structure.png)
 
----
+**What the screenshot demonstrates:**
+- Ten columns defined, exactly matching the MySQL source schema
+- Key columns: `order_id`, `order_date`, `customer_name`, `product`, `quantity`, `unit_price`, `line_total`, `payment_method`, `order_status`
+- The structure supports direct `COPY` from the cleaned CSV output of the MySQL extraction  
 
-### customer_activity
+### 5.4 customer_activity Structure  
 
-```sql
-\d grocery.customer_activity
-```
+![customer_activity Structure](./docs/screenshots/customer_activity_structure.png)  
 
- **Screenshot — customer_activity column definitions**
+**What the screenshot demonstrates:**
+- Seven columns defined, matching the MongoDB document structure
+- Key columns: `customer_name`, `product`, `activity`, `activity_timestamp`, `device_type`, `session_id`
+- The `activity` column captures behavioral events: `Viewed`, `Added to Cart`, `Purchased`  
 
-![customer_activity Structure](./docs/screenshots/customer_activity_structure.png)
 
----
-
-### customer_analytics
-
-```sql
-\d grocery.customer_analytics
-```
-
-**Screenshot — customer_analytics column definitions**
+### 5.5 customer_analytics Structure
 
 ![customer_analytics Structure](./docs/screenshots/customer_analytics_structure.png)
 
----
+-**What the screenshot demonstrates:**
+- Ten columns combining attributes from both source systems
+- Transactional fields: `line_total`, `order_date`, `payment_method`, `order_status`
+- Behavioral fields: `activity`, `activity_timestamp`, `device_type`
+- This unified structure enables cross‑domain analytical queries
 
-### fact_sales (shows FK constraints)
-
-```sql
-\d grocery.fact_sales
-```
-
-**Expected — shows 4 FK constraints:**
-```
-Foreign-key constraints:
-    "fact_sales_customer_id_fkey" FOREIGN KEY (customer_id) REFERENCES grocery.dim_customer(customer_id)
-    "fact_sales_date_id_fkey"     FOREIGN KEY (date_id)     REFERENCES grocery.dim_date(date_id)
-    "fact_sales_payment_id_fkey"  FOREIGN KEY (payment_id)  REFERENCES grocery.dim_payment(payment_id)
-    "fact_sales_product_id_fkey"  FOREIGN KEY (product_id)  REFERENCES grocery.dim_product(product_id)
-```
-
-**Screenshot — fact_sales with FK constraints visible**
+### 5.6 Foreign Key Constraints
 
 ![fact_sales FK Constraints](./docs/screenshots/fact_sales_fks.png)
 
+**What the screenshot demonstrates:**
+- Four foreign key constraints confirmed on `fact_sales`
+- Reference mapping:
+  - `customer_id` → `dim_customer(customer_id)`
+  - `product_id` → `dim_product(product_id)`
+  - `date_id` → `dim_date(date_id)`
+  - `payment_id` → `dim_payment(payment_id)`
+- These constraints enforce referential integrity, a mandatory characteristic of a properly implemented star schema
+
 ---
 
-## 10. Step 7 — Copy CSV Files into Container
-
-Exit PostgreSQL first:
-
-```sql
-\q
-```
-
-Then copy the cleaned CSV files from your project folder into the PostgreSQL container:
-
-```bash
-docker cp data/cleaned/orders_clean.csv   postgres-dw:/tmp/orders_clean.csv
-docker cp data/cleaned/activity_clean.csv postgres-dw:/tmp/activity_clean.csv
-```
-
-**Expected output:**
-```
-Successfully copied 5.69kB to postgres-dw:/tmp/orders_clean.csv
-Successfully copied 2.15kB to postgres-dw:/tmp/activity_clean.csv
-```
-
- **Screenshot — both files copied successfully**
+## 6. Data Loading
 
 ![CSV Files Copied](./docs/screenshots/csv_copied.png)
 
----
+**What the screenshot demonstrates:**
+- `orders_clean.csv` successfully copied to `/tmp/orders_clean.csv` inside the PostgreSQL container
+- `activity_clean.csv` successfully copied to `/tmp/activity_clean.csv`
+- The `Successfully copied` messages confirm that the cleaned ETL output is accessible for `COPY` commands
 
-## 11. Step 8 — Load Data into Staging Tables
-
-Go back into PostgreSQL:
-
-```bash
-docker exec -it postgres-dw psql -U admin -d warehouse
-```
-
-Load the orders data:
-
-```sql
-COPY grocery.orders_dw(order_id, order_date, customer_name, product,
-    category, quantity, unit_price, line_total, payment_method, order_status)
-FROM '/tmp/orders_clean.csv'
-DELIMITER ',' CSV HEADER;
-```
-
-Load the activity data:
-
-```sql
-COPY grocery.customer_activity(customer_name, product, category, activity,
-    activity_timestamp, device_type, session_id)
-FROM '/tmp/activity_clean.csv'
-DELIMITER ',' CSV HEADER;
-```
-
-Verify both loaded:
-
-```sql
-SELECT 'orders_dw'        AS table_name, COUNT(*) AS rows FROM grocery.orders_dw
-UNION ALL
-SELECT 'customer_activity', COUNT(*) FROM grocery.customer_activity;
-```
-
-**Expected output:**
-```
-   table_name     | rows
-------------------+------
- orders_dw        |   70
- customer_activity|   25
-```
-
-**Screenshot — COPY 70 and COPY 25 confirmed**
+### 6.2 Staging Table Loading
 
 ![Staging Tables Loaded](./docs/screenshots/staging_loaded.png)
 
+**What the screenshot demonstrates:**
+- `COPY 70` — 70 rows inserted into `orders_dw`, matching the MySQL source count
+- `COPY 25` — 25 rows inserted into `customer_activity`, matching the MongoDB source count
+- The complete loading logic is documented in [`02_load_staging_data.sql`](./sql-scripts/data-warehouse-scripts/02_load_staging_data.sql)
+
 ---
 
-## 12. Step 9 — Populate Dimension Tables
+## 7. Star Schema Population
 
-```sql
--- Populate dim_customer from both staging tables
-INSERT INTO grocery.dim_customer(customer_name)
-SELECT DISTINCT customer_name FROM grocery.orders_dw
-ON CONFLICT(customer_name) DO NOTHING;
-
--- Populate dim_product
-INSERT INTO grocery.dim_product(product_name, category)
-SELECT DISTINCT product, category FROM grocery.orders_dw
-ON CONFLICT DO NOTHING;
-
--- Populate dim_date with time intelligence columns
-INSERT INTO grocery.dim_date(full_date, day, month, month_name, quarter, year)
-SELECT DISTINCT order_date,
-    EXTRACT(DAY     FROM order_date)::INT,
-    EXTRACT(MONTH   FROM order_date)::INT,
-    TO_CHAR(order_date, 'Month'),
-    EXTRACT(QUARTER FROM order_date)::INT,
-    EXTRACT(YEAR    FROM order_date)::INT
-FROM grocery.orders_dw
-ON CONFLICT(full_date) DO NOTHING;
-
--- Populate dim_payment
-INSERT INTO grocery.dim_payment(payment_method)
-SELECT DISTINCT payment_method FROM grocery.orders_dw
-ON CONFLICT(payment_method) DO NOTHING;
-
--- Populate dim_activity
-INSERT INTO grocery.dim_activity(activity_type)
-SELECT DISTINCT activity FROM grocery.customer_activity
-ON CONFLICT(activity_type) DO NOTHING;
-```
-
-Verify all dimensions:
-
-```sql
-SELECT 'dim_customer' AS dim, COUNT(*) FROM grocery.dim_customer
-UNION ALL SELECT 'dim_product', COUNT(*) FROM grocery.dim_product
-UNION ALL SELECT 'dim_date',    COUNT(*) FROM grocery.dim_date
-UNION ALL SELECT 'dim_payment', COUNT(*) FROM grocery.dim_payment
-UNION ALL SELECT 'dim_activity',COUNT(*) FROM grocery.dim_activity;
-```
-
-**Expected output:**
-```
-     dim      | count
---------------+-------
- dim_customer |    15
- dim_product  |    20
- dim_date     |    35
- dim_payment  |     4
- dim_activity |     3
-```
-
-**Screenshot — all 5 dimension tables populated**
+### 7.1 Dimension Population
 
 ![Dimensions Populated](./docs/screenshots/dimensions_populated.png)
 
----
+**What the screenshot demonstrates:**
+- `dim_customer` — 15 distinct customers extracted from `orders_dw`
+- `dim_product` — 20 distinct products extracted from `orders_dw`
+- `dim_date` — 35 distinct order dates with derived attributes (day, month, quarter, year)
+- `dim_payment` — 4 distinct payment methods (Cash, Card, EFT, Mobile)
+- `dim_activity` — 3 distinct activity types (Viewed, Added to Cart, Purchased)
+- Complete dimension population logic is available in [`03_populate_dimensions.sql`](./sql-scripts/data-warehouse-scripts/03_populate_dimensions.sql)
 
-## 13. Step 10 — Populate Fact Table
-
-```sql
-INSERT INTO grocery.fact_sales(customer_id, product_id, date_id, payment_id,
-    quantity, unit_price, line_total, order_status)
-SELECT
-    dc.customer_id,
-    dp.product_id,
-    dd.date_id,
-    dpm.payment_id,
-    o.quantity,
-    o.unit_price,
-    o.line_total,
-    o.order_status
-FROM grocery.orders_dw o
-JOIN grocery.dim_customer dc  ON dc.customer_name  = o.customer_name
-JOIN grocery.dim_product  dp  ON dp.product_name   = o.product
-JOIN grocery.dim_date     dd  ON dd.full_date       = o.order_date
-JOIN grocery.dim_payment  dpm ON dpm.payment_method = o.payment_method;
-
-SELECT COUNT(*) AS fact_rows_loaded FROM grocery.fact_sales;
-```
-
-**Expected output:**
-```
- fact_rows_loaded
------------------
-              70
-```
-
-**Screenshot — fact_sales loaded with 70 rows**
+### 7.2 Fact Table Population
 
 ![Fact Table Loaded](./docs/screenshots/fact_table_loaded.png)
 
----
+**What the screenshot demonstrates:**
+- `INSERT 0 70` — 70 rows successfully inserted into `fact_sales`
+- Verification query returns `70`, confirming complete load
+- Each row links to dimension surrogate keys via the JOIN logic in [`04_populate_fact_table.sql`](./sql-scripts/data-warehouse-scripts/04_populate_fact_table.sql)
 
-## 14. Step 11 — Star Schema Verification Join
-
-This query proves the star schema works end-to-end by joining the fact table back to all its dimensions:
-
-```sql
-SELECT
-    dc.customer_name,
-    dp.product_name,
-    dp.category,
-    dd.month_name,
-    dd.year,
-    dpm.payment_method,
-    fs.quantity,
-    fs.line_total,
-    fs.order_status
-FROM grocery.fact_sales fs
-JOIN grocery.dim_customer dc  ON fs.customer_id = dc.customer_id
-JOIN grocery.dim_product  dp  ON fs.product_id  = dp.product_id
-JOIN grocery.dim_date     dd  ON fs.date_id     = dd.date_id
-JOIN grocery.dim_payment  dpm ON fs.payment_id  = dpm.payment_id
-ORDER BY fs.sale_id
-LIMIT 10;
-```
-
-**Screenshot — star schema full join showing all dimension data**
+### 7.3 Star Schema Validation
 
 ![Star Schema Preview](./docs/screenshots/star_schema_preview.png)
+
+**What the screenshot demonstrates:**
+- Successful four‑table JOIN traversing the complete star schema
+- Columns returned: `customer_name`, `product_name`, `category`, `month_name`, `year`, `payment_method`, `quantity`, `line_total`, `order_status`
+- The ten rows preview confirms all foreign key relationships are operational and the star schema is correctly materialized
 
 ---

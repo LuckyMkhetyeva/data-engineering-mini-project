@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS grocery.dim_customer (
 -- Product dimension
 CREATE TABLE IF NOT EXISTS grocery.dim_product (
     product_id   SERIAL PRIMARY KEY,
-    product_name TEXT NOT NULL,
+    product_name TEXT NOT NULL UNIQUE,
     category     TEXT
 );
 

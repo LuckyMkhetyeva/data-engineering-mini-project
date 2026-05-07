@@ -7,6 +7,12 @@
 -- docker cp data/cleaned/orders_clean.csv postgres-dw:/tmp/orders_clean.csv
 -- docker cp data/cleaned/activity_clean.csv postgres-dw:/tmp/activity_clean.csv
 
+-- Clear staging and dependent outputs for repeatable loads
+TRUNCATE TABLE grocery.customer_analytics;
+TRUNCATE TABLE grocery.fact_sales RESTART IDENTITY;
+TRUNCATE TABLE grocery.orders_dw;
+TRUNCATE TABLE grocery.customer_activity;
+
 -- Load orders data
 COPY grocery.orders_dw(
     order_id,
@@ -20,7 +26,7 @@ COPY grocery.orders_dw(
     payment_method,
     order_status
 )
-FROM '/tmp/orders_clean.csv'
+FROM '/etl-data/cleaned/orders_clean.csv'
 DELIMITER ','
 CSV HEADER;
 
@@ -34,7 +40,7 @@ COPY grocery.customer_activity(
     device_type,
     session_id
 )
-FROM '/tmp/activity_clean.csv'
+FROM '/etl-data/cleaned/activity_clean.csv'
 DELIMITER ','
 CSV HEADER;
 

@@ -1,3 +1,12 @@
+"""
+Experimental PostgreSQL loader.
+
+This script is kept for reference only. It is not part of the official
+submission workflow. The official data warehouse loading process uses SQL
+scripts under sql-scripts/data-warehouse-scripts/ to create the grocery
+schema, load staging data via COPY, and build dimensional/fact models.
+"""
+
 # ============================================================
 # DMS580S Mini Project 2026
 # ETL Layer: Loading data to the data warehouse

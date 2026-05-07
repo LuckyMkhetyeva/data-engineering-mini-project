@@ -3,6 +3,9 @@
 -- Responsible: Keitumetse Dimpe
 -- =====================================================
 
+-- Clear integrated table for repeatable execution
+TRUNCATE TABLE grocery.customer_analytics;
+
 -- Insert integrated data by joining orders and activity
 INSERT INTO grocery.customer_analytics(
     customer_name,

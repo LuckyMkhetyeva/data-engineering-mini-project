@@ -3,6 +3,9 @@
 -- Responsible: Keitumetse Dimpe
 -- =====================================================
 
+-- Clear fact table for repeatable execution
+TRUNCATE TABLE grocery.fact_sales RESTART IDENTITY;
+
 -- Insert into fact_sales by joining orders with dimensions
 INSERT INTO grocery.fact_sales(
     customer_id,

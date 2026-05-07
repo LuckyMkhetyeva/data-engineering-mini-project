@@ -11,7 +11,7 @@ ON CONFLICT(customer_name) DO NOTHING;
 -- Populate dim_product from orders
 INSERT INTO grocery.dim_product(product_name, category)
 SELECT DISTINCT product, category FROM grocery.orders_dw
-ON CONFLICT DO NOTHING;
+ON CONFLICT(product_name) DO NOTHING;
 
 -- Populate dim_date from orders (extract date parts)
 INSERT INTO grocery.dim_date(full_date, day, month, month_name, quarter, year)

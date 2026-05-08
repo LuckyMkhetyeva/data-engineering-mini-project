@@ -1,8 +1,7 @@
--- folder: sql-scripts/metabase-scripts/metabase_queries.sql
-
 -- =====================================================
 -- FRESHMART METABASE ANALYTICAL QUERIES
 -- Use these queries in Metabase as SQL questions.
+-- Author: Lucky Mkhetyeva - 221400214
 -- =====================================================
 
 -- 1) Product Sales Performance (Completed Orders)

@@ -1,0 +1,71 @@
+order_id,order_date,customer_name,product,category,quantity,unit_price,line_total,payment_method,order_status
+1,2025-01-05,Amahle Dlamini,Chicken Breast,Meat,2,89.99,179.98,Card,Completed
+1,2025-01-05,Amahle Dlamini,Full Cream Milk,Dairy,3,22.99,68.97,Card,Completed
+2,2025-01-07,Sipho Nkosi,Full Cream Milk,Dairy,3,22.99,68.97,EFT,Completed
+2,2025-01-07,Sipho Nkosi,White Bread,Bakery,2,16.49,32.98,EFT,Completed
+3,2025-01-10,Lerato Mokoena,Maize Meal 5kg,Grains,1,79.99,79.99,Cash,Completed
+3,2025-01-10,Lerato Mokoena,Potatoes,Produce,2,29.99,59.98,Cash,Completed
+4,2025-01-12,Thabo Sithole,Basmati Rice,Grains,2,34.99,69.98,Card,Completed
+4,2025-01-12,Thabo Sithole,Onions,Produce,1,17.99,17.99,Card,Completed
+5,2025-01-15,Nomsa Zulu,Free-Range Eggs,Dairy,1,45.99,45.99,Mobile,Completed
+5,2025-01-15,Nomsa Zulu,Plain Yoghurt,Dairy,2,19.99,39.98,Mobile,Completed
+6,2025-02-02,Kagiso Molefe,Beef Mince,Meat,1,119.99,119.99,Card,Completed
+6,2025-02-02,Kagiso Molefe,Spaghetti Pasta,Grains,1,24.99,24.99,Card,Completed
+7,2025-02-06,Zanele Khumalo,Cheddar Cheese,Dairy,2,59.99,119.98,EFT,Completed
+7,2025-02-06,Zanele Khumalo,Sunflower Oil,Pantry,1,62.99,62.99,EFT,Completed
+8,2025-02-10,Bongani Ndlovu,Sunflower Oil,Pantry,1,62.99,62.99,Cash,Completed
+8,2025-02-10,Bongani Ndlovu,Peanut Butter,Pantry,1,49.99,49.99,Cash,Completed
+9,2025-02-14,Fatima Cassim,Instant Coffee,Beverages,1,74.99,74.99,Card,Completed
+9,2025-02-14,Fatima Cassim,Orange Juice,Beverages,2,33.99,67.98,Card,Completed
+10,2025-02-18,Hendrik van Wyk,Apples Granny Smith,Produce,2,39.99,79.98,Mobile,Completed
+10,2025-02-18,Hendrik van Wyk,Whole Wheat Bread,Bakery,1,18.99,18.99,Mobile,Completed
+11,2025-03-01,Precious Mahlangu,White Bread,Bakery,3,16.49,49.47,Cash,Completed
+11,2025-03-01,Precious Mahlangu,Onions,Produce,2,17.99,35.98,Cash,Completed
+12,2025-03-05,David Osei,Chicken Breast,Meat,3,89.99,269.97,Card,Completed
+12,2025-03-05,David Osei,Washing Powder,Household,1,99.99,99.99,Card,Completed
+13,2025-03-08,Thandeka Ntanzi,Washing Powder,Household,1,99.99,99.99,EFT,Completed
+13,2025-03-08,Thandeka Ntanzi,Maize Meal 5kg,Grains,1,79.99,79.99,EFT,Completed
+14,2025-03-12,Rethabile Sello,Potatoes,Produce,2,29.99,59.98,Mobile,Completed
+14,2025-03-12,Rethabile Sello,Apples Granny Smith,Produce,1,39.99,39.99,Mobile,Completed
+15,2025-03-17,Yusuf Arendse,Orange Juice,Beverages,4,33.99,135.96,Card,Completed
+15,2025-03-17,Yusuf Arendse,White Bread,Bakery,2,16.49,32.98,Card,Completed
+16,2025-04-02,Amahle Dlamini,Peanut Butter,Pantry,1,49.99,49.99,Card,Completed
+16,2025-04-02,Amahle Dlamini,Free-Range Eggs,Dairy,2,45.99,91.98,Card,Completed
+17,2025-04-07,Sipho Nkosi,Beef Mince,Meat,2,119.99,239.98,EFT,Completed
+17,2025-04-07,Sipho Nkosi,Spaghetti Pasta,Grains,2,24.99,49.98,EFT,Completed
+18,2025-04-11,Lerato Mokoena,Pork Sausages,Meat,2,64.99,129.98,Cash,Completed
+18,2025-04-11,Lerato Mokoena,Potatoes,Produce,1,29.99,29.99,Cash,Completed
+19,2025-04-16,Thabo Sithole,Apples Granny Smith,Produce,3,39.99,119.97,Card,Completed
+19,2025-04-16,Thabo Sithole,Free-Range Eggs,Dairy,2,45.99,91.98,Card,Completed
+20,2025-04-20,Nomsa Zulu,Free-Range Eggs,Dairy,2,45.99,91.98,Mobile,Completed
+20,2025-04-20,Nomsa Zulu,Plain Yoghurt,Dairy,1,19.99,19.99,Mobile,Completed
+21,2025-05-03,Kagiso Molefe,Full Cream Milk,Dairy,6,22.99,137.94,Card,Completed
+21,2025-05-03,Kagiso Molefe,White Bread,Bakery,2,16.49,32.98,Card,Completed
+22,2025-05-08,Zanele Khumalo,Maize Meal 5kg,Grains,1,79.99,79.99,EFT,Completed
+22,2025-05-08,Zanele Khumalo,Cheddar Cheese,Dairy,1,59.99,59.99,EFT,Completed
+23,2025-05-12,Bongani Ndlovu,Plain Yoghurt,Dairy,2,19.99,39.98,Cash,Completed
+23,2025-05-12,Bongani Ndlovu,Basmati Rice,Grains,2,34.99,69.98,Cash,Completed
+24,2025-05-16,Fatima Cassim,Basmati Rice,Grains,3,34.99,104.97,Card,Refunded
+24,2025-05-16,Fatima Cassim,Orange Juice,Beverages,2,33.99,67.98,Card,Refunded
+25,2025-05-20,Hendrik van Wyk,Apples Granny Smith,Produce,2,39.99,79.98,Mobile,Completed
+25,2025-05-20,Hendrik van Wyk,Pork Sausages,Meat,1,64.99,64.99,Mobile,Completed
+26,2025-06-04,Precious Mahlangu,Onions,Produce,4,17.99,71.96,Cash,Completed
+26,2025-06-04,Precious Mahlangu,Potatoes,Produce,2,29.99,59.98,Cash,Completed
+27,2025-06-09,David Osei,Sunflower Oil,Pantry,2,62.99,125.98,Card,Completed
+27,2025-06-09,David Osei,Chicken Breast,Meat,1,89.99,89.99,Card,Completed
+28,2025-06-13,Thandeka Ntanzi,Chicken Breast,Meat,1,89.99,89.99,EFT,Completed
+28,2025-06-13,Thandeka Ntanzi,Instant Coffee,Beverages,2,74.99,149.98,EFT,Completed
+29,2025-06-18,Rethabile Sello,Instant Coffee,Beverages,2,74.99,149.98,Mobile,Completed
+29,2025-06-18,Rethabile Sello,Orange Juice,Beverages,1,33.99,33.99,Mobile,Completed
+30,2025-06-23,Yusuf Arendse,White Bread,Bakery,4,16.49,65.96,Card,Completed
+30,2025-06-23,Yusuf Arendse,Whole Wheat Bread,Bakery,2,18.99,37.98,Card,Completed
+31,2025-07-01,Amahle Dlamini,Cheddar Cheese,Dairy,1,59.99,59.99,Card,Completed
+31,2025-07-01,Amahle Dlamini,Full Cream Milk,Dairy,2,22.99,45.98,Card,Completed
+32,2025-07-07,Lerato Mokoena,Apples Granny Smith,Produce,3,39.99,119.97,EFT,Completed
+32,2025-07-07,Lerato Mokoena,Sunflower Oil,Pantry,1,62.99,62.99,EFT,Completed
+33,2025-07-14,Nomsa Zulu,Beef Mince,Meat,1,119.99,119.99,Mobile,Completed
+33,2025-07-14,Nomsa Zulu,Spaghetti Pasta,Grains,2,24.99,49.98,Mobile,Completed
+34,2025-07-20,Bongani Ndlovu,Peanut Butter,Pantry,2,49.99,99.98,Cash,Completed
+34,2025-07-20,Bongani Ndlovu,Onions,Produce,1,17.99,17.99,Cash,Completed
+35,2025-07-28,David Osei,Orange Juice,Beverages,3,33.99,101.97,Card,Completed
+35,2025-07-28,David Osei,Washing Powder,Household,1,99.99,99.99,Card,Completed

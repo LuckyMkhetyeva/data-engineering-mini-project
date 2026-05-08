@@ -87,7 +87,6 @@ JOIN grocery.dim_payment dpay ON fs.payment_id = dpay.payment_id
 WHERE fs.order_status = 'Completed'
 GROUP BY dpay.payment_method
 ORDER BY total_revenue DESC;
-
 -- 8) Device Type Activity Distribution (Optional)
 -- Metabase chart: Bar chart
 SELECT
@@ -106,4 +105,5 @@ SELECT
     SUM(CASE WHEN activity = 'Purchased' THEN 1 ELSE 0 END) AS purchased_count
 FROM grocery.customer_activity
 GROUP BY product
- 
+
+

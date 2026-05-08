@@ -1,5 +1,6 @@
-# folder: docs/bi-metabase.md
 # BI Metadata - FreshMart
+
+## Author: Lucky Mkhetyeva - 221400214
 
 ## Data Dictionary (`grocery.customer_analytics`)
 
